@@ -15,11 +15,11 @@ def init_jira_from_json():
     jira_server_options = json_data[JIRA_SERVER_OPTIONS]
     jira_usr = json_data[JIRA_USR]
     jira_pass = base64.b64decode(json_data[JIRA_PASS]).decode('ascii')
-    jira_obj = JIRA(jira_server_options, basic_auth=(jira_usr, jira_pass))
+    jira = JIRA(jira_server_options, basic_auth=(jira_usr, jira_pass))
 
-    return jira_obj
+    return jira
 
 if __name__ == "__main__":
-    jira_obj = init_jira_from_json()
-    projects = jira_obj.projects()
+    jira = init_jira_from_json()
+    projects = jira.projects()
     print(projects)
