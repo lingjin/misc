@@ -1,0 +1,5 @@
+{
+    "jira_server_options":{"server": "https://idart.abc.com"},
+    "jira_usr": "a12345",
+    "jira_pass": "abcde"
+}
