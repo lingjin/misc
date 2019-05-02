@@ -16,7 +16,7 @@ JIRA_PASS = 'jira_pass'
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = '19E3lnqPh74QkscXkenl4GbevNJiylrrSwoBf0sWWr7s'
-SPREADSHEET_RANGE_NAME = 'Class Data!A2:E'
+SPREADSHEET_RANGE_NAME = 'A2'
 
 def init_jira_from_json():
     with open(JIRA_CONFIG_FILE, 'r') as json_file:
@@ -57,18 +57,14 @@ def init_google_spreadsheet():
 
 if __name__ == "__main__":
     jira = init_jira_from_json()
-    projects = jira.projects()
-    print(projects)
-
     sheet = init_google_spreadsheet()
-    result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
-                                range=SPREADSHEET_RANGE_NAME).execute()
-    values = result.get('values', [])
+    
+    values = []
+    issues = jira.search_issues(jira.filter('171646').jql)
+    for issue in issues:
+        value_row = [issue.key, issue.fields.summary]
+        values.append(value_row)
 
-    if not values:
-        print('No data found.')
-    else:
-        print('Name, Major:')
-        for row in values:
-            # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[4]))
+    result = sheet.values().update(
+        spreadsheetId=SPREADSHEET_ID, range=SPREADSHEET_RANGE_NAME,
+        valueInputOption='RAW', body={'values': values}).execute()
