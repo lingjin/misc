@@ -28,9 +28,12 @@ def main():
     if str_cid == '0x0001' : # ATT
         bridge_bootloader_name = 'bridge_bootloader_QPS30.205-Q3-87_att_cid1.img'
         ta_bootloader_name = 'ta_bootloader_QPS30.205-Q3-43-16-3R1_att_cid1.img'
-    elif str_cid == '0x0021' or str_cid == '0x0015' : # TMO
+    elif str_cid == '0x0015' : # TMO
         bridge_bootloader_name = 'bridge_bootloader_QPS30.205-Q3-87_tmo_cid21.img'
         ta_bootloader_name = 'ta_bootloader_QPS30.205-Q3-43-16-2R2_tmo_cid21.img'
+    elif str_cid == '0x0032' : # Retail
+        bridge_bootloader_name = 'bridge_bootloader_QPS30.205-Q3-87_retail_cid50.img'
+        ta_bootloader_name = 'ta_bootloader_QPS30.205-Q3-43-16-3R1_retail_cid50.img'
     else :
         print('Unexpected CID, Quit!')
         return
