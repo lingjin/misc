@@ -79,7 +79,7 @@ def connect_server():
             else:
                 fastboot_file_name = fastboot[0]
                 download_url = second_level_url + fastboot_file_name
-                localfile_name = "~/Downloads/" + fastboot_file_name
+                localfile_name = "./" + fastboot_file_name
                 print_log("Downloading " + fastboot_file_name)
                 urllib.request.urlretrieve(download_url, localfile_name)
                 delete_local_file(localfile_name)
