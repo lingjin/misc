@@ -49,6 +49,7 @@ def wait_to_7pm():
     now = datetime.datetime.now()
     today7pm = now.replace(hour=19, minute=0, second=0, microsecond=0)
     while now < today7pm:
+        print("Now the time is " + now.strftime("%H:%M:%S"))
         time.sleep(60*10)
         now = datetime.datetime.now()
     return
