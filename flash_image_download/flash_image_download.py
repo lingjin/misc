@@ -6,6 +6,7 @@ import base64
 import urllib.request
 import re
 import os
+import time
 
 SERVER_CONFIG_FILE = '../server_config.json'
 USERNAME = 'username'
@@ -83,6 +84,7 @@ def connect_server():
                 print_log("Downloading " + fastboot_file_name)
                 urllib.request.urlretrieve(download_url, localfile_name)
                 delete_local_file(localfile_name)
+                time.sleep(60)
         
     return
 
