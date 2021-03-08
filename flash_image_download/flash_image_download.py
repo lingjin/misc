@@ -11,6 +11,8 @@ import time
 SERVER_CONFIG_FILE = '../server_config.json'
 USERNAME = 'username'
 PASSWORD = 'password'
+LOOP_COUNT = 'loop_count'
+SLEEP_TIMER = 'sleep_timer'
 
 
 def init_server_data_from_json():
@@ -19,8 +21,10 @@ def init_server_data_from_json():
 
     username = json_data[USERNAME]
     password = base64.b64decode(json_data[PASSWORD]).decode('ascii')
+    loop_count = json_data[LOOP_COUNT]
+    sleep_timer = json_data[SLEEP_TIMER]
 
-    return username, password
+    return username, password, loop_count, sleep_timer
 
 
 def print_log(log):
@@ -47,7 +51,7 @@ def connect_server():
 
     # Add the username and password.
     # If we knew the realm, we could use it instead of None.
-    username, password = init_server_data_from_json()
+    username, password, loop_count, sleep_timer = init_server_data_from_json()
     top_level_url = "https://artifacts.mot.com/artifactory/banks/11/"
     password_mgr.add_password(None, top_level_url, username, password)
 
@@ -62,7 +66,7 @@ def connect_server():
     # Install the opener.
     # Now all calls to urllib.request.urlopen use our opener.
     urllib.request.install_opener(opener)
-    while True:
+    for i in range(loop_count):
         pagehandle = urllib.request.urlopen(top_level_url)
         html = pagehandle.read()
         html = html.decode('utf8')
@@ -84,7 +88,7 @@ def connect_server():
                 print_log("Downloading " + fastboot_file_name)
                 urllib.request.urlretrieve(download_url, localfile_name)
                 delete_local_file(localfile_name)
-                time.sleep(60)
+                time.sleep(sleep_timer)
         
     return
 
