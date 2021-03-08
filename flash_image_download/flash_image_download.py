@@ -45,6 +45,14 @@ def delete_local_file(file_path):
 
     return 
 
+def wait_to_7pm():
+    now = datetime.datetime.now()
+    today7pm = now.replace(hour=19, minute=0, second=0, microsecond=0)
+    while now < today7pm:
+        time.sleep(60*10)
+        now = datetime.datetime.now()
+    return
+
 def connect_server():
     # create a password manager
     password_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
@@ -85,7 +93,7 @@ def connect_server():
                 fastboot_file_name = fastboot[0]
                 download_url = second_level_url + fastboot_file_name
                 localfile_name = "./" + fastboot_file_name
-                print_log("Downloading " + fastboot_file_name)
+                print_log("Loop " + i + ", Downloading " + fastboot_file_name)
                 urllib.request.urlretrieve(download_url, localfile_name)
                 delete_local_file(localfile_name)
                 time.sleep(sleep_timer)
@@ -93,6 +101,7 @@ def connect_server():
     return
 
 if __name__ == "__main__":
-    #init_server_data_from_json()
-    connect_server()
+    while True:
+        wait_to_7pm()
+        connect_server()
 
