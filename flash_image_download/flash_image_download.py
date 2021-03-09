@@ -81,8 +81,8 @@ def connect_server():
         html = html.decode('utf8')
         release_num = re.findall('>RRP31\.(.{0,3}\d)/</a>',html, re.S)
 
-        for i in range(0, len(release_num)):
-            release_label = "RRP31." + release_num[i]
+        for j in range(0, len(release_num)):
+            release_label = "RRP31." + release_num[j]
             second_level_url = top_level_url + release_label + "/banks_retail/userdebug/intcfg_test-keys/"
             pagehandle = urllib.request.urlopen(second_level_url)
             html = pagehandle.read()
